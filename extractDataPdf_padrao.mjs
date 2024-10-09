@@ -157,7 +157,7 @@ export async function extractDataPdf (filePath, id){
         dataHolerite: dadosHolerite,
         entradasSaidas: entradaSaida
     }
-
+    console.log(allDatas);
     return allDatas;
 };
 
