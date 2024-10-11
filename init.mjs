@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 import { extractDataPdf, convertToExcel } from './extractDataPdf_padrao.mjs';
-import { extractDataCcb, convertCcbToExcel } from './extractDataCbb.mjs';
+import { extractDataCcb, convertCcbToExcel } from './extractDataCcb.mjs';
 
 const readdir = promisify(fs.readdir);
 

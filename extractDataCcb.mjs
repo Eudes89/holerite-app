@@ -33,7 +33,9 @@ export async function extractDataCcb (filePath){
 
         const firstField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.387);
         const secondField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.828);
-
+        // console.log(organizedItems.find(obj => obj.x >= 9.109 && obj.y == 27.387 && obj.x <= 9.316).text);
+        // console.log(organizedItems.find(obj => obj.x >= 9.109 && obj.y == 27.828 && obj.x <= 9.316).text);
+        // console.log(organizedItems.find(obj => obj.x >= 8.92 && obj.y == 28.454 && obj.x <= 9.163).text)
         let despesaDeTarifaDeCadastro;
         let despesaFinancia;
         let seguro;
@@ -41,11 +43,11 @@ export async function extractDataCcb (filePath){
         let total;
         if(firstField && secondField){
             
-            despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x == 9.109 && obj.y == 27.387).text;
+            despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 9.0 && obj.y == 27.387 && obj.x <= 9.9).text;
             despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
-            seguro = organizedItems.find(obj => obj.x >= 9.109 && obj.y == 27.828 && obj.x <= 9.316).text;
+            seguro = organizedItems.find(obj => obj.x >= 9.0 && obj.y == 27.828 && obj.x <= 9.9).text;
             seguroFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.828).text;
-            total = organizedItems.find(obj => obj.x == 8.92 && obj.y == 28.454).text;
+            total = organizedItems.find(obj => obj.x >= 8.0 && obj.y == 28.454 && obj.x <= 9.9).text;
         } else if (firstField && !secondField){
             
             if(firstField.text == '2 - Seguro'){
@@ -68,7 +70,7 @@ export async function extractDataCcb (filePath){
             seguro = '';
             seguroFinancia = '';
         }
-
+        
         const mapCbb ={
             PLANILHA_DE_PROPOSTA_Nº: organizedItems.find(obj => obj.x == 8.731 && obj.y == 4.397).text,
             Situação: organizedItems.find(obj => obj.x == 27.78 && obj.y == 8.568).text,
@@ -136,7 +138,7 @@ export async function extractDataCcb (filePath){
             Seguro_Financia: seguroFinancia,
             Total: total,
         }
-
+        // console.log(mapCbb)
         return mapCbb;
         
         
@@ -173,7 +175,12 @@ export async function convertCcbToExcel (allObjDatas){
 // const testFilePath5 = './ccbDocs/801086090.PDF';
 // const testFilePath6 = './ccbDocs/801086133.PDF';
 // const testFilePath7 = './ccbDocs/801088266.PDF';
-// const datas = await extractDataCcb(testFilePath4);
+// const testFilePath8 = './ccbDocs/801063721.PDF'
+// const testFilePath9 = './ccbDocs/801064678.PDF'
+// const testFilePath10 = './ccbDocs/801066570.PDF'
+// const testFilePath11 = './ccbDocs/801067805.PDF'
+// const testFilePath12 = './ccbDocs/801064678.PDF'
+// const datas = await extractDataCcb(testFilePath11);
 
 // await convertCcbToExcel(datas);
 
