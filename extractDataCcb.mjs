@@ -29,13 +29,11 @@ export async function extractDataCcb (filePath){
         const items = await readPdfFile(filePath);
         const organizedItems = items.sort((a, b) => a.y - b.y);
         
-        // organizedItems.forEach(obj => console.log(obj.x, obj.y, obj.text));
+        organizedItems.forEach(obj => console.log(obj.x, obj.y, obj.text));
 
         const firstField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.387);
         const secondField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.828);
-        // console.log(organizedItems.find(obj => obj.x >= 9.109 && obj.y == 27.387 && obj.x <= 9.316).text);
-        // console.log(organizedItems.find(obj => obj.x >= 9.109 && obj.y == 27.828 && obj.x <= 9.316).text);
-        // console.log(organizedItems.find(obj => obj.x >= 8.92 && obj.y == 28.454 && obj.x <= 9.163).text)
+        // console.log(organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text)
         let despesaDeTarifaDeCadastro;
         let despesaFinancia;
         let seguro;
@@ -43,25 +41,25 @@ export async function extractDataCcb (filePath){
         let total;
         if(firstField && secondField){
             
-            despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 9.0 && obj.y == 27.387 && obj.x <= 9.9).text;
+            despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
             despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
-            seguro = organizedItems.find(obj => obj.x >= 9.0 && obj.y == 27.828 && obj.x <= 9.9).text;
+            seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text;
             seguroFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.828).text;
-            total = organizedItems.find(obj => obj.x >= 8.0 && obj.y == 28.454 && obj.x <= 9.9).text;
+            total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.454 && obj.x <= 10.9).text;
         } else if (firstField && !secondField){
             
             if(firstField.text == '2 - Seguro'){
-                seguro = organizedItems.find(obj => obj.x == 9.109 && obj.y == 27.387).text;
-                seguroFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
+                seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
+                seguroFinancia = organizedItems.find(obj => obj.x >= 10.504 && obj.y == 27.387).text;
                 despesaDeTarifaDeCadastro = '';
                 despesaFinancia = '';
-                total = organizedItems.find(obj => obj.x == 8.92 && obj.y == 28.013).text;
+                total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
             } else if (firstField.text == '1 - Despesa de Tarifa de Cadastro'){
-                despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x == 9.109 && obj.y == 27.387).text;
+                despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
                 despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
                 seguro = '';
                 seguroFinancia = '';
-                total = organizedItems.find(obj => obj.x == 8.92 && obj.y == 28.013).text;
+                total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
             }
 
         } else {
@@ -138,7 +136,7 @@ export async function extractDataCcb (filePath){
             Seguro_Financia: seguroFinancia,
             Total: total,
         }
-        // console.log(mapCbb)
+        console.log(mapCbb)
         return mapCbb;
         
         
@@ -180,7 +178,12 @@ export async function convertCcbToExcel (allObjDatas){
 // const testFilePath10 = './ccbDocs/801066570.PDF'
 // const testFilePath11 = './ccbDocs/801067805.PDF'
 // const testFilePath12 = './ccbDocs/801064678.PDF'
-// const datas = await extractDataCcb(testFilePath11);
+const testFilePath13 = './ccbDocs/errors/801063721.PDF'
+const testFilePath14 = './ccbDocs/errors/801068805.PDF'
+const testFilePath15 = './ccbDocs/errors/801070557.PDF'
+const testFilePath16 = './ccbDocs/errors/801077206.PDF'
+const testFilePath17 = './ccbDocs/errors/801088322.PDF'
+const datas = await extractDataCcb(testFilePath17);
 
 // await convertCcbToExcel(datas);
 
