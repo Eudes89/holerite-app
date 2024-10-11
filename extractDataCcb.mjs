@@ -29,7 +29,7 @@ export async function extractDataCcb (filePath){
         const items = await readPdfFile(filePath);
         const organizedItems = items.sort((a, b) => a.y - b.y);
         
-        organizedItems.forEach(obj => console.log(obj.x, obj.y, obj.text));
+        // organizedItems.forEach(obj => console.log(obj.x, obj.y, obj.text));
 
         const firstField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.387);
         const secondField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.828);
@@ -136,7 +136,7 @@ export async function extractDataCcb (filePath){
             Seguro_Financia: seguroFinancia,
             Total: total,
         }
-        console.log(mapCbb)
+        // console.log(mapCbb)
         return mapCbb;
         
         
@@ -178,12 +178,12 @@ export async function convertCcbToExcel (allObjDatas){
 // const testFilePath10 = './ccbDocs/801066570.PDF'
 // const testFilePath11 = './ccbDocs/801067805.PDF'
 // const testFilePath12 = './ccbDocs/801064678.PDF'
-const testFilePath13 = './ccbDocs/errors/801063721.PDF'
-const testFilePath14 = './ccbDocs/errors/801068805.PDF'
-const testFilePath15 = './ccbDocs/errors/801070557.PDF'
-const testFilePath16 = './ccbDocs/errors/801077206.PDF'
-const testFilePath17 = './ccbDocs/errors/801088322.PDF'
-const datas = await extractDataCcb(testFilePath17);
+// const testFilePath13 = './ccbDocs/errors/801063721.PDF'
+// const testFilePath14 = './ccbDocs/errors/801068805.PDF'
+// const testFilePath15 = './ccbDocs/errors/801070557.PDF'
+// const testFilePath16 = './ccbDocs/errors/801077206.PDF'
+// const testFilePath17 = './ccbDocs/errors/801088322.PDF'
+// const datas = await extractDataCcb(testFilePath17);
 
 // await convertCcbToExcel(datas);
 
