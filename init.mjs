@@ -25,6 +25,7 @@ async function readPDFFiles(folderPath) {
         let allDataEntradas = [];
         for (const file of pdfFiles) {
             const filePath = path.join(folderPath, file);
+            console.log(`Extraindo os dados do arquivo holerite: ${filePath}`);
             const extractData = await extractDataPdf(filePath, idFile);
             allDataHolerites.push(extractData.dataHolerite);
             allDataEntradas.push( extractData.entradasSaidas )
@@ -46,11 +47,11 @@ async function readCcbFiles (folderPath) {
         
         const files = await readdir(folderPath);
         const pdfFiles = files.filter(file => path.extname(file).toLowerCase() === '.pdf');
-        
         // Juntando todos os dados de todos arquivos Ccb em uma array;
         const allDatasCcb = [];
         for(const file of pdfFiles) {
             const filePath = path.join(folderPath, file);
+            console.log(`Extraindo o arquivo ccb: ${filePath}`);
             const extractData = await extractDataCcb(filePath);
             allDatasCcb.push(extractData);
         }

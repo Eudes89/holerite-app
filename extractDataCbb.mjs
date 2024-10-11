@@ -137,7 +137,6 @@ export async function extractDataCcb (filePath){
             Total: total,
         }
 
-        console.log(mapCbb);
         return mapCbb;
         
         
