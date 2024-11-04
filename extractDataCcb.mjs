@@ -29,45 +29,122 @@ export async function extractDataCcb (filePath){
         const items = await readPdfFile(filePath);
         const organizedItems = items.sort((a, b) => a.y - b.y);
         
-        // organizedItems.forEach(obj => console.log(obj.x, obj.y, obj.text));
+        // organizedItems.forEach(obj => console.log(`x = ${obj.x}, y = ${obj.y}, text = ${obj.text}`));
+        const mutationFieldsNames = []
+        organizedItems.forEach(obj => {
+            if(obj.y >= 26 && obj.y <= 31 && obj.x === 1.203) mutationFieldsNames.push(obj.text);
+        });
 
-        const firstField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.387);
-        const secondField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.828);
-        // console.log(organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text)
+        const approvedNames = ['1 - Despesa de Tarifa de Cadastro', '2 - Seguro', 'TOTAL:'];
+        const removeIndicesMFN = []
+        mutationFieldsNames.forEach(name => {
+            if(approvedNames.includes(name)) removeIndicesMFN.push(name);
+        })
+
+        const mutationFieldsValues = []
+        organizedItems.forEach(obj => {
+            if(obj.y >= 26 && obj.y <= 30 && obj.x >= 8 && obj.x <= 11) mutationFieldsValues.push(obj.text);
+        });
+        // console.log(mutationFieldsValues)
+        const removeIndicesMFV = []
+        mutationFieldsValues.forEach(value => {
+            const numb = Number(value);
+            if(value !== 'Valor' && value !== 'Financia'){
+                removeIndicesMFV.push(value)
+            } else if(value === 'Sim' || value === 'Não'){
+                removeIndicesMFV.push(value)
+            }
+        })
+        
+        // console.log(removeIndicesMFN);
+        // console.log(removeIndicesMFV);
+        
+        const financiaArray = []
+        removeIndicesMFV.forEach((value) => {
+            if(value === 'Sim' || value === 'Não') financiaArray.push(value);
+        })
+          
+        const numeros = removeIndicesMFV.filter(value => {
+            const num = parseFloat(value);
+            return !isNaN(num);
+        });
+        
+        // console.log(financiaArray);
+        // console.log(numeros);
+        
+        const organize = [];
+        for(let i = 0; i < removeIndicesMFN.length; i++){
+            let name = removeIndicesMFN[i];
+            let obj = {
+                name: name,
+                value: numeros[i],
+                fin: financiaArray[i]
+            }
+            organize.push(obj)
+        }
+
+        // console.log(organize)
+
         let despesaDeTarifaDeCadastro;
         let despesaFinancia;
         let seguro;
         let seguroFinancia;
         let total;
-        if(firstField && secondField){
-            
-            despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
-            despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
-            seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text;
-            seguroFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.828).text;
-            total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.454 && obj.x <= 10.9).text;
-        } else if (firstField && !secondField){
-            
-            if(firstField.text == '2 - Seguro'){
-                seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
-                seguroFinancia = organizedItems.find(obj => obj.x >= 10.504 && obj.y == 27.387).text;
-                despesaDeTarifaDeCadastro = '';
-                despesaFinancia = '';
-                total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
-            } else if (firstField.text == '1 - Despesa de Tarifa de Cadastro'){
-                despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
-                despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
-                seguro = '';
-                seguroFinancia = '';
-                total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
-            }
 
-        } else {
-            despesaDeTarifaDeCadastro = '';
-            despesaFinancia = '';
-            seguro = '';
-            seguroFinancia = '';
-        }
+        organize.forEach(obj => {
+            if(obj.name === '1 - Despesa de Tarifa de Cadastro' && obj.value !== '0,00'){
+                despesaDeTarifaDeCadastro = obj.value;
+                despesaFinancia = obj.fin;
+            } else if (obj.name === '2 - Seguro' && obj.value !== '0,00'){
+                seguro = obj.value;
+                seguroFinancia = obj.fin;
+            } else if (obj.name === 'TOTAL:'){
+                total = obj.value;
+            }
+        })
+
+
+        // let fieldsMutation = [];
+        // organizedItems.forEach(obj => {
+        //     if(obj.x === despesaPosition.x && obj.y <= parecerPosition.y) fieldsMutation.push(obj)
+        // })
+
+        // fieldsMutation.forEach(obj => console.log(obj))
+        // const firstField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.387);
+        // const secondField = organizedItems.find(obj => obj.x == 1.203 && obj.y == 27.828);
+        // console.log(organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text)
+        // console.log(organizedItems.find(obj => obj.x === 1.203 && obj.y === 26.199).text)
+        // console.log(organizedItems.find(obj => obj.x === 1.203 && obj.y === 26.199).text)
+        
+        // if(firstField && secondField){
+            
+        //     despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
+        //     despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
+        //     seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.828 && obj.x <= 10.9).text;
+        //     seguroFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.828).text;
+        //     total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.454 && obj.x <= 10.9).text;
+        // } else if (firstField && !secondField){
+            
+        //     if(firstField.text == '2 - Seguro'){
+        //         seguro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
+        //         seguroFinancia = organizedItems.find(obj => obj.x >= 10.504 && obj.y == 27.387).text;
+        //         despesaDeTarifaDeCadastro = '';
+        //         despesaFinancia = '';
+        //         total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
+        //     } else if (firstField.text == '1 - Despesa de Tarifa de Cadastro'){
+        //         despesaDeTarifaDeCadastro = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 27.387 && obj.x <= 10.9).text;
+        //         despesaFinancia = organizedItems.find(obj => obj.x == 10.504 && obj.y == 27.387).text;
+        //         seguro = '';
+        //         seguroFinancia = '';
+        //         total = organizedItems.find(obj => obj.x >= 7.0 && obj.y == 28.013 && obj.x <= 10.9).text;
+        //     }
+
+        // } else {
+        //     despesaDeTarifaDeCadastro = '';
+        //     despesaFinancia = '';
+        //     seguro = '';
+        //     seguroFinancia = '';
+        // }
         
         const mapCbb ={
             PLANILHA_DE_PROPOSTA_Nº: organizedItems.find(obj => obj.x == 8.731 && obj.y == 4.397).text,
