@@ -102,11 +102,17 @@ export async function extractDataPdf (filePath, id){
             dadosHolerite.base_irrf = parseFloat(items[i].text.replace(".", "").replace(",", "."));
         } else if (items[i].x == 20.188){
             dadosHolerite.dep_ir = parseFloat(items[i].text.replace(".", "").replace(",", "."));
-        } else if (items[i].x == 24.031){
+        } else if (items[i].x == 24.031 && items[i].y == 41.859){
+            // console.log(
+            //     `Total proventos: ${items[i].text}`
+            // )
             dadosHolerite.total_proventos = parseFloat(items[i].text.replace(".", "").replace(",", "."));
-        } else if (items[i].x == 28.719){
+        } else if (items[i].x >= 27 && items[i].x <= 31 && items[i].y == 41.859){
+            // console.log(
+            //     `Total descontos: ${items[i].text}`
+            // )
             dadosHolerite.total_descontos = parseFloat(items[i].text.replace(".", "").replace(",", "."));
-        } else if (items[i].x == 28.438){
+        } else if (items[i].x >= 28.438){
             dadosHolerite.total_liquido = parseFloat(items[i].text.replace(".", "").replace(",", "."));
         } else if (items[i].x == 15.359 && items[i].y == 42.946){
             dadosHolerite.conta = items[i].text;
@@ -157,7 +163,7 @@ export async function extractDataPdf (filePath, id){
         dataHolerite: dadosHolerite,
         entradasSaidas: entradaSaida
     }
-    
+    // console.log(allDatas);
     return allDatas;
 };
 
@@ -218,3 +224,5 @@ export async function convertToExcel(objData, fileName, type) {
     }
 }
 
+// const file = './docs/Relatorio_Holerite_202408_17499_011-1.pdf';
+// extractDataPdf(file, 1);

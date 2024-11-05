@@ -26,6 +26,7 @@ async function readPDFFiles(folderPath) {
         for (const file of pdfFiles) {
             const filePath = path.join(folderPath, file);
             console.log(`Extraindo os dados do arquivo holerite: ${filePath}`);
+            console.log("SE DER ERRO TU É GAY");
             const extractData = await extractDataPdf(filePath, idFile);
             allDataHolerites.push(extractData.dataHolerite);
             allDataEntradas.push( extractData.entradasSaidas )
@@ -52,6 +53,7 @@ async function readCcbFiles (folderPath) {
         for(const file of pdfFiles) {
             const filePath = path.join(folderPath, file);
             console.log(`Extraindo o arquivo ccb: ${filePath}`);
+            console.log("SE DER ERRO TU É GAY");
             const extractData = await extractDataCcb(filePath);
             allDatasCcb.push(extractData);
         }
