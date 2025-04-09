@@ -1,8 +1,7 @@
 # Extração de Dados de Holerites e CCB
 
 ## 📌 Sobre o Projeto
-Este projeto foi desenvolvido para a empresa **Família Soluções** com o objetivo de **extrair dados vitais** dos holerites e de documentos chamados CCB de seus clientes. 
-Ele automatiza a leitura de arquivos PDF, organiza as informações e as converte em **planilhas do Excel**, facilitando a manipulação dos dados.
+Este projeto foi desenvolvido para a empresa **Família Soluções** com o objetivo de **extrair dados vitais** dos holerites e de documentos chamados CCB de seus clientes. Ele automatiza a leitura de arquivos PDF, organiza as informações e as converte em **planilhas do Excel**, facilitando a manipulação dos dados.
 
 ## 🚀 Como Funciona?
 1. O usuário salva os documentos em suas respectivas pastas:
@@ -53,3 +52,10 @@ Realiza o mesmo processo do `extractDataPdf_padrao.mjs`, mas para documentos **C
 1. **Coloque os arquivos PDF** nas pastas correspondentes.
 2. **Execute o arquivo** `start.bat`.
 3. **Acesse os resultados** na pasta `/excel_file` e edite conforme necessário.
+
+## 🏆 Autor e Licença
+Este programa foi criado para **extrair rapidamente dados importantes** dos holerites da empresa **Padrão**, que possui milhares de funcionários. Para que funcione com outros tipos de holerites, **modificações** precisam ser feitas nas funções para garantir a extração precisa dos dados.
+
+O projeto foi desenvolvido do zero por **Eudes Azevedo** e é um **projeto open source**, permitindo sua cópia e modificação.
+
+Caso precisem de auxílio ou ajuda, fiquem à vontade para **entrar em contato** pelo e-mail: `eudesazevedo@hotmail.com`
